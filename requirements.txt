@@ -9,3 +9,4 @@ slowapi>=0.1.9
 tiktoken>=0.8.0
 dnspython>=2.7.0
 email-validator>=2.2.0
+llama_index==0.12.*
