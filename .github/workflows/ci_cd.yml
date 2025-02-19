@@ -51,9 +51,9 @@ jobs:
       run: |
         docker run --rm app:test python -m pytest -v > reports/test-results.txt
 
-    # Upload des rapports comme artifacts
+    # Upload des rapports comme artifacts avec la dernière version
     - name: Upload security scan results
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: security-and-test-reports
         path: reports/
