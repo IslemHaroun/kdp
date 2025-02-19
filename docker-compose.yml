@@ -1,0 +1,22 @@
+
+services:
+  app:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      # Pour le développement, monte le code source
+      - .:/app
+      # Volume persistant pour les données générées
+      - app_data:/app/data
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+    restart: unless-stopped
+    # Permet d'avoir les logs en temps réel
+    tty: true
+
+volumes:
+  app_data:
+    # Volume nommé pour persister les données
