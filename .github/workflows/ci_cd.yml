@@ -26,6 +26,35 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
+    - name: Create reports directory
+      run: mkdir -p reports
+
+    # Installation et scan avec Trivy
+    - name: Run Trivy vulnerability scanner
+      uses: aquasecurity/trivy-action@master
+      with:
+        image-ref: 'app:test'
+        format: 'table'
+        output: 'reports/trivy-results.txt'
+        severity: 'CRITICAL,HIGH,MEDIUM'
+
+    # Installation et scan avec Grype
+    - name: Install Grype
+      run: curl -sSfL https://raw.githubusercontent.com/anchore/grype/main/install.sh | sh -s -- -b /usr/local/bin
+
+    - name: Run Grype scan
+      run: |
+        grype app:test --output json > reports/grype-results.json
+        grype app:test --output table > reports/grype-results.txt
+
     - name: Run Tests
       run: |
-        docker run --rm app:test python -m pytest -v
+        docker run --rm app:test python -m pytest -v > reports/test-results.txt
+
+    # Upload des rapports comme artifacts
+    - name: Upload security scan results
+      uses: actions/upload-artifact@v3
+      with:
+        name: security-and-test-reports
+        path: reports/
+        retention-days: 90
