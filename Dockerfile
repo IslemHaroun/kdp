@@ -50,5 +50,5 @@ ENV NICEGUI_HOST=0.0.0.0
 ENV QT_QPA_PLATFORM=offscreen
 ENV PYTHONUNBUFFERED=1
 
-# Commande de démarrage
-ENTRYPOINT ["python", "-c", "import sys; sys.path.append('/app'); from wizard.ui_builder import main; main()"]
+# Commande de démarrage (utilisant le fichier main.py à la racine)
+CMD ["python3", "main.py"]
