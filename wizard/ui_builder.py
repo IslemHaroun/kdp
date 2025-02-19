@@ -238,14 +238,3 @@ def setup_wizard_ui():
 
 if __name__ == "__main__":
     setup_wizard_ui()
-
-def main():
-    ui.run(
-        port=8080,
-        reload=False,
-        show=False,
-        language='en'
-    )
-
-if __name__ in {"__main__", "__mp_main__"}:
-    main()
