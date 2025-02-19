@@ -1,8 +1,8 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-# Installation des dépendances système nécessaires pour PyQt5
+# Installation des dépendances système nécessaires
 RUN apt-get update && apt-get install -y \
     build-essential \
     libgl1-mesa-glx \
@@ -32,8 +32,10 @@ tiktoken>=0.8.0\n\
 dnspython>=2.7.0\n\
 email-validator>=2.2.0\n\
 llama_index==0.12.*\n\
-pytest>=7.0.0\n\
-flake8>=6.0.0" > requirements.txt
+opentelemetry-api>=1.21.0\n\
+opentelemetry-sdk>=1.21.0\n\
+opentelemetry-instrumentation-fastapi>=0.44b0\n\
+opentelemetry-exporter-jaeger==1.21.0" > requirements.txt
 
 # Installation des dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt

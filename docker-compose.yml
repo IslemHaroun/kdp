@@ -1,3 +1,4 @@
+version: '3.8'
 
 services:
   app:
@@ -7,16 +8,26 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      # Pour le développement, monte le code source
       - .:/app
-      # Volume persistant pour les données générées
       - app_data:/app/data
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - JAEGER_AGENT_HOST=jaeger
+      - JAEGER_AGENT_PORT=6831
+      - OTEL_SERVICE_NAME=a-plus-content-generator
+    depends_on:
+      - jaeger
     restart: unless-stopped
-    # Permet d'avoir les logs en temps réel
     tty: true
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"  # UI
+      - "6831:6831/udp"  # Jaeger agent
+      - "14268:14268"  # Jaeger collector
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    restart: unless-stopped
 
 volumes:
   app_data:
-    # Volume nommé pour persister les données
