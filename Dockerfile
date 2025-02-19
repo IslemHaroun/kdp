@@ -31,7 +31,9 @@ slowapi>=0.1.9\n\
 tiktoken>=0.8.0\n\
 dnspython>=2.7.0\n\
 email-validator>=2.2.0\n\
-llama_index==0.12.*" > requirements.txt
+llama_index==0.12.*\n\
+pytest>=7.0.0\n\
+flake8>=6.0.0" > requirements.txt
 
 # Installation des dépendances Python
 RUN pip install --no-cache-dir -r requirements.txt
@@ -50,5 +52,5 @@ ENV NICEGUI_HOST=0.0.0.0
 ENV QT_QPA_PLATFORM=offscreen
 ENV PYTHONUNBUFFERED=1
 
-# Commande de démarrage (utilisant le fichier main.py à la racine)
+# Commande de démarrage
 CMD ["python3", "main.py"]
